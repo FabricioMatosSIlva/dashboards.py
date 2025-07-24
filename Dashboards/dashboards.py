@@ -20,11 +20,15 @@ month = st.sidebar.selectbox("Selecione o mês", df["Month"].unique())
 df_month = df[df["Month"] == month]
 
 # Filtro de filiais
+
 cities = df_month["City"].unique()
 selected_cities = st.sidebar.multiselect("Selecione a(s) filial(is)", options=list(cities), default=list(cities))
 
 # Aplicar filtro de cidades
-df_filtered = df_month[df_month["City"].isin(selected_cities)]
+if not selected_cities:
+    df_filtered = df_month
+else:
+    df_filtered = df_month[df_month["City"].isin(selected_cities)]
 
 # Layout dos gráficos
 col1, col2 = st.columns(2)
